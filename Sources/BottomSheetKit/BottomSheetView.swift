@@ -40,7 +40,8 @@ public struct BottomSheetView<Content: View>: View {
                             .font(.title2)
                     }
                 }
-                .padding(.top)
+                .padding(.vertical)
+
                 .padding(.horizontal)
 
                 // 滚动内容区，限定高度
@@ -56,7 +57,7 @@ public struct BottomSheetView<Content: View>: View {
                         }
                     )
                 }
-                .frame(maxHeight: availableHeight - 80) // 留出标题区域大约 80 高度
+                .frame(maxHeight: availableHeight - 20) // 留出标题区域大约 80 高度
             }
             .background(background)
             .clipShape(RoundedRectangle(cornerRadius: cornerRadius, style: .continuous))
