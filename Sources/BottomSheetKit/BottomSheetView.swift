@@ -45,18 +45,18 @@ public struct BottomSheetView<Content: View>: View {
                     ScrollView {
                         content
                             .frame(maxWidth: .infinity)
-                            .padding(.horizontal)
+                            .padding(.horizontal, 16)
                             .padding(.bottom)
                     }
                     .frame(maxHeight: maxHeight)
                 } else {
                     content
-                        .padding(.horizontal)
+                        .padding(.horizontal, 16)
                         .padding(.bottom)
                 }
             }
         }
-        .frame(maxWidth: .infinity)
+        .frame(maxWidth: .infinity, maxHeight: .infinity) // 撑满 sheet 区域
         .background(background)
         .clipShape(RoundedRectangle(cornerRadius: cornerRadius, style: .continuous))
     }
