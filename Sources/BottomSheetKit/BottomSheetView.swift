@@ -5,27 +5,24 @@ public struct BottomSheetView<Content: View>: View {
     let onClose: () -> Void
     let cornerRadius: CGFloat
     let background: Color
-    let maxHeight: CGFloat?
     let bottomPadding: CGFloat
-    let sheetPadding: CGFloat
     let content: Content
+
+    @State private var contentHeight: CGFloat = 0
+    @State private var containerHeight: CGFloat = 0
 
     public init(
         title: String,
         cornerRadius: CGFloat = 30,
         background: Color = .white,
-        maxHeight: CGFloat? = nil,
         bottomPadding: CGFloat = 20,
-        sheetPadding: CGFloat = 16,
         onClose: @escaping () -> Void,
         @ViewBuilder content: () -> Content
     ) {
         self.title = title
         self.cornerRadius = cornerRadius
         self.background = background
-        self.maxHeight = maxHeight
         self.bottomPadding = bottomPadding
-        self.sheetPadding = sheetPadding
         self.onClose = onClose
         self.content = content()
     }
@@ -47,26 +44,41 @@ public struct BottomSheetView<Content: View>: View {
                 .padding(.top)
                 .padding(.horizontal)
 
-                // 内容区域
+                GeometryReader { outerProxy in
+                    let availableHeight = outerProxy.size.height
+                    Color.clear
+                        .onAppear { containerHeight = availableHeight }
+                }
+                .frame(height: 0)
+
                 Group {
-                    if let maxHeight = maxHeight {
-                        ScrollView {
+                    GeometryReader { proxy in
+                        let totalHeight = proxy.size.height
+                        Color.clear
+                            .onAppear {
+                                contentHeight = totalHeight
+                            }
+                    }
+                    .frame(height: 0)
+
+                    Group {
+                        if contentHeight > containerHeight {
+                            ScrollView {
+                                content
+                                    .padding(.horizontal)
+                                    .padding(.bottom, bottomPadding)
+                            }
+                        } else {
                             content
-                                .frame(maxWidth: .infinity)
                                 .padding(.horizontal)
                                 .padding(.bottom, bottomPadding)
                         }
-                        .frame(maxHeight: maxHeight)
-                    } else {
-                        content
-                            .padding(.horizontal)
-                            .padding(.bottom, bottomPadding)
                     }
                 }
             }
-            .padding(.horizontal, sheetPadding)
             .background(background)
             .clipShape(RoundedRectangle(cornerRadius: cornerRadius, style: .continuous))
+            .padding(.horizontal, 24)
         }
     }
 }
