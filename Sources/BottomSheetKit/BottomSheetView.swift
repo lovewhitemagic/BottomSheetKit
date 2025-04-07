@@ -56,7 +56,6 @@ public struct BottomSheetView<Content: View>: View {
                 }
             }
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity) // 撑满 sheet 区域
         .background(background)
         .clipShape(RoundedRectangle(cornerRadius: cornerRadius, style: .continuous))
     }
