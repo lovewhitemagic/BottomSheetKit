@@ -1,6 +1,8 @@
 # BottomSheetKit
 一个自定义样式的 SwiftUI 弹出卡片组件（Sheet），支持圆角、背景色、自定义内容插槽，自动滚动适配。
 
+![preview](assets/preview1.png)
+
 ## ✨ 功能亮点
 
 - ✅ 自定义标题与关闭按钮
@@ -9,7 +11,7 @@
 - ✅ 自定义圆角与背景色
 - ✅ 适配 iOS `.presentationDetents` 使用方式
 
----
+
 
 ## 📦 安装方式（Swift Package Manager）
 
@@ -22,8 +24,9 @@ File > Add Packages...
 
 ```swift
 import BottomSheetKit
+import SwiftUI
 
-struct ContentView: View {
+struct BottomSheetKitView: View {
     @State private var showSheet = false
 
     var body: some View {
@@ -32,26 +35,28 @@ struct ContentView: View {
         }
         .sheet(isPresented: $showSheet) {
             BottomSheetView(
-                title: "选择项目",
-                cornerRadius: 24,
-                background: Color.white,
-                maxHeight: 400,
+                title: "智能滚动 + 固定标题",
+                //bottomPadding: 20,
                 onClose: { showSheet = false }
             ) {
                 VStack(spacing: 12) {
-                    ForEach(1...20, id: \\.self) { index in
-                        Text("项目 \\(index)")
-                            .padding()
+                    ForEach(1...30, id: \.self) { i in
+                        Text("项目 \(i)")
                             .frame(maxWidth: .infinity)
+                            .padding()
                             .background(Color(.systemGray6))
                             .cornerRadius(10)
                     }
                 }
             }
-            .presentationDetents([.medium, .large])
+            .presentationDetents([.height(350)])
             .presentationBackground(.clear)
         }
     }
+}
+
+#Preview {
+    BottomSheetKitView()
 }
 ```
 
@@ -60,12 +65,12 @@ struct ContentView: View {
 
 ```swift
 BottomSheetView(
-    title: String,
-    cornerRadius: CGFloat = 30,
-    background: Color = .white,
-    maxHeight: CGFloat? = nil,
-    onClose: () -> Void,
-    content: () -> some View
+    title: String,                    // 顶部标题文本
+    cornerRadius: CGFloat = 30,       // 圆角值，默认 30
+    background: Color = .white,       // 弹窗背景色
+    bottomPadding: CGFloat = 20,      // 内容底部距离，默认 20
+    onClose: @escaping () -> Void,    // 关闭按钮回调
+    content: () -> Content            // 弹窗内容区域（支持任意 View）
 )
 ```
 ## 🧩 使用场景
