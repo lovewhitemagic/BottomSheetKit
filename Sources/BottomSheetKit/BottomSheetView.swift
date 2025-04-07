@@ -28,9 +28,11 @@ public struct BottomSheetView<Content: View>: View {
     }
 
     public var body: some View {
-        VStack(spacing: 0) {
+        GeometryReader { outerProxy in
+            let availableHeight = outerProxy.size.height
+
             VStack(spacing: 0) {
-                // 顶部栏
+                // 标题栏
                 HStack {
                     Text(title)
                         .font(.headline)
@@ -44,35 +46,36 @@ public struct BottomSheetView<Content: View>: View {
                 .padding(.top)
                 .padding(.horizontal)
 
-                GeometryReader { outerProxy in
-                    let availableHeight = outerProxy.size.height
-                    Color.clear
-                        .onAppear { containerHeight = availableHeight }
-                }
-                .frame(height: 0)
-
+                // 内容区域 + 高度测量
                 Group {
-                    GeometryReader { proxy in
-                        let totalHeight = proxy.size.height
-                        Color.clear
-                            .onAppear {
-                                contentHeight = totalHeight
-                            }
-                    }
-                    .frame(height: 0)
-
-                    Group {
-                        if contentHeight > containerHeight {
-                            ScrollView {
-                                content
-                                    .padding(.horizontal)
-                                    .padding(.bottom, bottomPadding)
-                            }
-                        } else {
+                    if contentHeight > (availableHeight - 80) { // 留出标题 + padding 空间
+                        ScrollView {
                             content
+                                .background(
+                                    GeometryReader { proxy in
+                                        Color.clear
+                                            .onAppear {
+                                                contentHeight = proxy.size.height
+                                                containerHeight = availableHeight
+                                            }
+                                    }
+                                )
                                 .padding(.horizontal)
                                 .padding(.bottom, bottomPadding)
                         }
+                    } else {
+                        content
+                            .background(
+                                GeometryReader { proxy in
+                                    Color.clear
+                                        .onAppear {
+                                            contentHeight = proxy.size.height
+                                            containerHeight = availableHeight
+                                        }
+                                }
+                            )
+                            .padding(.horizontal)
+                            .padding(.bottom, bottomPadding)
                     }
                 }
             }
