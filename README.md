@@ -5,11 +5,15 @@
 
 ## ✨ 功能亮点
 
-- ✅ 自定义标题与关闭按钮
-- ✅ 内容可插槽（任意 View）
-- ✅ 自动 ScrollView：设置 `maxHeight` 即可启用滚动
-- ✅ 自定义圆角与背景色
-- ✅ 适配 iOS `.presentationDetents` 使用方式
+功能点 | 描述
+✅ 一行集成 | 使用 MyCustomButton 即可轻松唤起底部弹窗
+✅ 免写 @State | 内部自动处理弹窗控制，无需外部状态管理
+✅ 支持默认按钮样式 | 快速使用文本按钮，无需额外配置
+✅ 支持自定义按钮视图 | 可传入任意 SwiftUI 视图作为触发按钮，样式完全由你掌控
+✅ 可配置弹窗内容 | 支持任意 SwiftUI 内容视图作为弹窗内容，支持滚动
+✅ 参数灵活可调 | 自定义 title、detents、cornerRadius、background 等
+✅ 系统风格原生弹窗 | 使用原生 .sheet + .presentationDetents + .presentationBackground
+✅ iOS 17+ 兼容性好 | 自动适配 .presentationBackground，低版本不报错
 
 
 
@@ -23,40 +27,54 @@ File > Add Packages...
 ## 🚀 使用示例
 
 ```swift
+
 import BottomSheetKit
-import SwiftUI
 
-struct BottomSheetKitView: View {
-    @State private var showSheet = false
-
+//一行集成 
+struct BottomSheetDemo: View {
     var body: some View {
-        Button("打开底部弹窗") {
-            showSheet = true
-        }
-        .sheet(isPresented: $showSheet) {
-            BottomSheetView(
-                title: "智能滚动 + 固定标题",
-                //bottomPadding: 20,
-                onClose: { showSheet = false }
-            ) {
-                VStack(spacing: 12) {
-                    ForEach(1...30, id: \.self) { i in
-                        Text("项目 \(i)")
-                            .frame(maxWidth: .infinity)
-                            .padding()
-                            .background(Color(.systemGray6))
-                            .cornerRadius(10)
-                    }
-                }
+        VStack {
+            MyCustomButton(title: "操作选项", detents: [.height(300)]) {
+                OptionListView()
             }
-            .presentationDetents([.height(350)])
-            .presentationBackground(.clear)
         }
     }
 }
+```
+```
+//支持自定义按钮视图
+struct BottomSheetDemo: View {
+    var body: some View {
+        VStack {
+            MyCustomButton(
+                title: "操作面板",
+                detents: [.height(320)],
+                cornerRadius: 12,
+                background: .yellow.opacity(0.2)
+            ) {
+                OptionListView()
+            }
 
-#Preview {
-    BottomSheetKitView()
+        }
+    }
+}
+```
+
+```
+//demo
+struct OptionListView: View {
+    var body: some View {
+        VStack(spacing: 12) {
+            ForEach(1...10, id: \.self) { i in
+                Text("选项 \(i)")
+                    .frame(maxWidth: .infinity)
+                    .padding()
+                    .background(Color.gray.opacity(0.1))
+                    .cornerRadius(10)
+            }
+        }
+        .padding()
+    }
 }
 ```
 
@@ -64,13 +82,11 @@ struct BottomSheetKitView: View {
 ## 📐 API 说明
 
 ```swift
-BottomSheetView(
+MyCustomButton(
     title: String,                    // 顶部标题文本
+    detents: [.height(320)],          // sheet高度
     cornerRadius: CGFloat = 30,       // 圆角值，默认 30
     background: Color = .white,       // 弹窗背景色
-    bottomPadding: CGFloat = 20,      // 内容底部距离，默认 20
-    onClose: @escaping () -> Void,    // 关闭按钮回调
-    content: () -> Content            // 弹窗内容区域（支持任意 View）
 )
 ```
 ## 🧩 使用场景
@@ -80,6 +96,3 @@ BottomSheetView(
 | 设置页弹窗     | 修改头像、昵称等    |
 | 选择器弹窗     | 城市、分类、主题选择 |
 | 内容展示       | 通知列表、项目明细  |
-
-## 👨‍💻 作者
-由 @lovewhitemagic 创建。欢迎 Star ⭐️ 或 PR！

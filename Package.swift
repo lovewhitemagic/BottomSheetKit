@@ -4,7 +4,8 @@ import PackageDescription
 let package = Package(
     name: "BottomSheetKit",
     platforms: [
-        .iOS(.v15)
+        .iOS(.v17),
+        .macOS(.v14)   // ✅ 如果你要在 macOS 也支持
     ],
     products: [
         .library(name: "BottomSheetKit", targets: ["BottomSheetKit"]),

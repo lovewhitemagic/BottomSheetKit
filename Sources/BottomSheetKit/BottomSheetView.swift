@@ -41,7 +41,6 @@ public struct BottomSheetView<Content: View>: View {
                     }
                 }
                 .padding(.vertical)
-
                 .padding(.horizontal)
 
                 // 滚动内容区，限定高度
@@ -57,7 +56,7 @@ public struct BottomSheetView<Content: View>: View {
                         }
                     )
                 }
-                .frame(maxHeight: availableHeight - 20) // 留出标题区域大约 80 高度
+                .frame(maxHeight: availableHeight - 20)
             }
             .background(background)
             .clipShape(RoundedRectangle(cornerRadius: cornerRadius, style: .continuous))
@@ -72,3 +71,4 @@ private struct ContentHeightKey: PreferenceKey {
         value = max(value, nextValue())
     }
 }
+
