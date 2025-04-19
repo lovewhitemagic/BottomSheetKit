@@ -31,15 +31,10 @@ File > Add Packages...
 import BottomSheetKit
 
 //一行集成 
-struct BottomSheetDemo: View {
-    var body: some View {
-        VStack {
-            MyCustomButton(title: "操作选项", detents: [.height(300)]) {
-                OptionListView()
-            }
-        }
-    }
+MyCustomButton(title: "操作选项", detents: [.height(300)]) {
+    OptionListView()
 }
+
 ```
 ```swift
 //自定义按钮
