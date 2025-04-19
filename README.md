@@ -41,43 +41,6 @@ struct BottomSheetDemo: View {
     }
 }
 ```
-```swift
-//支持自定义按钮视图
-struct BottomSheetDemo: View {
-    var body: some View {
-        VStack {
-            MyCustomButton(
-                title: "操作面板",
-                detents: [.height(320)],
-                cornerRadius: 12,
-                background: .yellow.opacity(0.2)
-            ) {
-                OptionListView()
-            }
-
-        }
-    }
-}
-```
-
-```swift
-//demo
-struct OptionListView: View {
-    var body: some View {
-        VStack(spacing: 12) {
-            ForEach(1...10, id: \.self) { i in
-                Text("选项 \(i)")
-                    .frame(maxWidth: .infinity)
-                    .padding()
-                    .background(Color.gray.opacity(0.1))
-                    .cornerRadius(10)
-            }
-        }
-        .padding()
-    }
-}
-```
-
 
 ## 📐 API 说明
 
