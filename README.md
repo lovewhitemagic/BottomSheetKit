@@ -6,14 +6,14 @@
 ## ✨ 功能亮点
 
 功能点 | 描述
-✅ 一行集成 | 使用 MyCustomButton 即可轻松唤起底部弹窗
-✅ 免写 @State | 内部自动处理弹窗控制，无需外部状态管理
-✅ 支持默认按钮样式 | 快速使用文本按钮，无需额外配置
-✅ 支持自定义按钮视图 | 可传入任意 SwiftUI 视图作为触发按钮，样式完全由你掌控
-✅ 可配置弹窗内容 | 支持任意 SwiftUI 内容视图作为弹窗内容，支持滚动
-✅ 参数灵活可调 | 自定义 title、detents、cornerRadius、background 等
-✅ 系统风格原生弹窗 | 使用原生 .sheet + .presentationDetents + .presentationBackground
-✅ iOS 17+ 兼容性好 | 自动适配 .presentationBackground，低版本不报错
+- ✅ 一行集成 | 使用 MyCustomButton 即可轻松唤起底部弹窗
+- ✅ 免写 @State | 内部自动处理弹窗控制，无需外部状态管理
+- ✅ 支持默认按钮样式 | 快速使用文本按钮，无需额外配置
+- ✅ 支持自定义按钮视图 | 可传入任意 SwiftUI 视图作为触发按钮，样式完全由你掌控
+- ✅ 可配置弹窗内容 | 支持任意 SwiftUI 内容视图作为弹窗内容，支持滚动
+- ✅ 参数灵活可调 | 自定义 title、detents、cornerRadius、background 等
+- ✅ 系统风格原生弹窗 | 使用原生 .sheet + .presentationDetents + .presentationBackground
+- ✅ iOS 17+ 兼容性好 | 自动适配 .presentationBackground，低版本不报错
 
 
 
@@ -41,7 +41,7 @@ struct BottomSheetDemo: View {
     }
 }
 ```
-```
+```swift
 //支持自定义按钮视图
 struct BottomSheetDemo: View {
     var body: some View {
@@ -60,7 +60,7 @@ struct BottomSheetDemo: View {
 }
 ```
 
-```
+```swift
 //demo
 struct OptionListView: View {
     var body: some View {
