@@ -41,6 +41,14 @@ struct BottomSheetDemo: View {
     }
 }
 ```
+```swift
+//自定义按钮
+MyCustomButton(detents: [.height(320)]) {
+    Label("📂 打开菜单", systemImage: "folder")
+} content: {
+    OptionListView()
+}
+```swift
 
 ## 📐 API 说明
 
